@@ -200,8 +200,22 @@ Steps:
         4.1.1) check if the item in that index is equal to the item in the next index
             4.1.1.1) if it is, add one to the count
 '''
+'''Design Recipe (Write your design recipe here!)
+input: list of integers
+output: int
+purpose: find the index of the longest contiguous repetition of a single number
+Steps:
+1) check if the list of integers is empty
+    1.1) if it is, return None
+2) create an empty list named repetitions_count to store the number of times any number is repeated in a list
+3) create an empty list named dupe_idx to store the starting index of when a number changes 
+4) loop through the a number less than the length of the list
+    4.1) loop through an infinite loop
+        4.1.1) check if the item in that index is equal to the item in the next index
+            4.1.1.1) if it is, add one to the count
+'''
 # Implementation
-def longest_repetition(lst:list[int]) -> Optional[int]:
+def max(lst:list[int]) -> Optional[tuple]:
     if not lst:
         return None
     repetitions_count = []
@@ -211,7 +225,7 @@ def longest_repetition(lst:list[int]) -> Optional[int]:
         loop = 0
         count = 0
         while loop == 0:
-            if idx+count < len(lst)-1 and lst[idx+count] == lst[idx+count+1]:
+            if idx + count < len(lst) - 1 and lst[idx + count] == lst[idx + count + 1]:
                 count += 1
             else:
                 count += 1
@@ -219,10 +233,17 @@ def longest_repetition(lst:list[int]) -> Optional[int]:
         repetitions_count.append(count)
         dupe_idx.append(idx)
         idx += count
-    large = repetitions_count[0]
+    return repetitions_count,dupe_idx
+
+
+def longest_repetition(lst:list[int]) -> Optional[int]:
+    if not lst:
+        return None
+    max_list = max(lst)
+    large = max_list[0][0]
     large_idx = 0
-    for n in range(len(repetitions_count)):
-        if repetitions_count[n] > large:
-            large = repetitions_count[n]
+    for n in range(len(max_list[0])):
+        if max_list[0][n] > large:
+            large = max_list[0][n]
             large_idx = n
-    return dupe_idx[large_idx]
+    return max_list[1][large_idx]
