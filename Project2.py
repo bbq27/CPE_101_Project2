@@ -193,26 +193,33 @@ purpose: find the index of the longest contiguous repetition of a single number
 Steps:
 1) check if the list of integers is empty
     1.1) if it is, return None
-2) create an empty list named repetitions_count to store the number of times any number is repeated in a list
-3) create an empty list named dupe_idx to store the starting index of when a number changes 
-4) loop through the a number less than the length of the list
-    4.1) loop through an infinite loop
-        4.1.1) check if the item in that index is equal to the item in the next index
-            4.1.1.1) if it is, add one to the count
+2) create a list max_list and set it equal to a tuple with a list of the repetition counts and indices
+3) create a variable large that stores the first number in the first list in the tuple
+4) create a variable large_idx and set it equal to 0 to store the largest index
+5) loop through the length of the first list in the tuple
+    5.1) check if the value of the index being iterated through in the first list in the tuple is greater than large
+        5.1.1) if it is, set large equal to that value
+        5.1.2) set large_idx equal to that index
+6) return the value of large_idx in the second list in the tuple
 '''
 '''Design Recipe (Write your design recipe here!)
 input: list of integers
-output: int
-purpose: find the index of the longest contiguous repetition of a single number
+output: tuple
+purpose: find the total number of times there is a contiguous number in a list and the index of where it starts
 Steps:
 1) check if the list of integers is empty
     1.1) if it is, return None
 2) create an empty list named repetitions_count to store the number of times any number is repeated in a list
 3) create an empty list named dupe_idx to store the starting index of when a number changes 
-4) loop through the a number less than the length of the list
+4) loop through the a number less than the length of the list with a variable idx
     4.1) loop through an infinite loop
         4.1.1) check if the item in that index is equal to the item in the next index
             4.1.1.1) if it is, add one to the count
+            4.1.1.2) if it isn't still add one to the count, but end the nested infinite loop
+    4.2) add the count variable to the repetitions_count list
+    4.3) add the number of the iteration count (idx) to dupe_idx
+    4.4) continue iterating through the list but iterate to the next value of idx + count
+5) return a tuple with repetitions_count and dupe_idx
 '''
 # Implementation
 def max(lst:list[int]) -> Optional[tuple]:
@@ -234,7 +241,6 @@ def max(lst:list[int]) -> Optional[tuple]:
         dupe_idx.append(idx)
         idx += count
     return repetitions_count,dupe_idx
-
 
 def longest_repetition(lst:list[int]) -> Optional[int]:
     if not lst:
